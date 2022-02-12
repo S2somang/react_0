@@ -1,0 +1,47 @@
+<html>
+
+<head>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <!--실제 배포할때는 development -> production 로 변경하면 된다-->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+</head>
+
+<body>
+    <div id="root"></div> <!-- 결과 : <div id="root"><button>Like></button> </div>-->
+    <script type="text/babel">
+        const e = React.createElement;
+        // class하나가 컴포넌트 하나라고 보자구..
+        class LikeButton extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    liked: false, // 기본상태 
+                };
+            }
+
+            // render()  :  태그를 만들어주는 함수, 화면을 어떻게 보여줄것인지 (<button>Like></button>를 만들겠다!)
+            // render(){return e(1,2,3 )} 
+            // 1. 태그 2. html속성 3.내용
+            render() {
+                return <button type="submit" onClick={() => { this.setState({ liked: true }) }}>{this.stat.liked === true ? 'Liked' : 'Like'}</button>;
+                // JSX : 자바스크립트 + xml
+                // 위와 같이 편하게 사용할 수 있는데, 자바스크립트에서 html 태그를 사용하게 하지 않음. 이것이 바로 우리가 리액트를 포기하게 만드는 이유중하나임
+                // 그래서 나온것이 바벨. 최신문법과 실험적인 문법을 자바스크립트에서 사용할 수 있게 해줌. 바벨도 스크립트가 있어서 써줘야함! 
+
+                // { }를 이용해서 택스트 대신해서 사용해줄 수 ㅇ도 있음
+
+                // e('button', {onClick: () => {this.setState({liked:true})}, type: 'submit'}, this.state.liked === true ? 'Liked' : 'Like'); 
+                // <button onClick= "() => {console.log("clicked")}">Like></button> 
+            }
+        }
+    </script>
+    <script type="text/babel"> // 위에 #root에 그린다!
+        // JSX 즉, xml 이기때문에 / 닫는 태그 잘써줘야함 문법에 엄격함!!
+        ReactDOM.render(<LikeButton />, document.querySelector('#root')); //원하는 개수만큼 늘리면 됨~!
+    </script>
+    <!-- 상태는 바뀌는 부분이다. 바뀔수 있는 부분 ) -->
+</body>
+
+</html>
