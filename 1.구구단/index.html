@@ -28,12 +28,15 @@
                 e.preventDefault();
                 // 입력한값과 실제 값이 같으면 ?! 정답 => 정답일때 화면이 어떻게 바뀔지
                 if (parseInt(this.state.value) === this.state.first * this.state.second) {
-                    this.setState({ 
-                        result: '정답',
-                        first: Math.ceil(Math.random() * 9),
-                        second: Math.ceil(Math.random() * 9),
-                        value: '',
+                    this.setState((prevState)=> { // prevState : 예전 바꾸기 전의 값이 들어있음
+                        return {
+                            result: '정답' + prevState.value,
+                            first: Math.ceil(Math.random() * 9),
+                            second: Math.ceil(Math.random() * 9),
+                            value: '',
+                        };
                     });
+                    this.input.focus(); // 아래에 input을 만들어 주었기 때문에 사용가능~ 그럼 dom이 선택이 됨
                 } else {
                     this.setState({ // 한번에 바꿔줄수 있음
                         result: '땡',
@@ -55,15 +58,23 @@
 
             onChange = (e) => this.setState({ value: e.target.value });
 
+            input; //class에 input이라 선언하고 ref로 함수를 만들어 사용해 직접 접근할 수 있음.
+
+            onRefInput = (c)=> {this.input = c;};
+
             render() {
+                // console.log('렌더링')
+                // this.setState가 랜더를 실행할 수 있다...
                 return ( // 소괄호는 취향차이(?)
                     // state 바꿀때 어떻게 했는지?
                     // input.onchange = (e) => { console.log(e.target.value)} // 얘를 이용하면 현재 뭘 입력하고 있는지 확인할 수 있음
                     // state는 setState처럼 직접 수동으로 바뀔얘들만 만들어줘라! 
+                    // <input ref={(c)=> {this.input = c;}} ... 이렇게 사용하면 나중에 복잡한 함수일경우 랜더가 계속 실행이 됨.
+                    // 그래서 위에 함수로 ㅂ따로 빼서 사용해주면 좋다.
                     <div>
                         <div>{this.state.first} 곱하기 {this.state.second}는?</div>
                         <form onSubmit={this.onSubmit}>
-                            <input type="number" value={this.state.value} onChange = {this.onChange} />
+                            <input ref={(c)=> this.onRefInput} type="number" value={this.state.value} onChange = {this.onChange} />
                             <button>입력</button>
                         </form>
                         <div>{this.state.result}</div>
@@ -74,7 +85,7 @@
     </script>
     <script type="text/babel"> // 위에 #root에 그린다!
         // JSX 즉, xml 이기때문에 / 닫는 태그 잘써줘야함 문법에 엄격함!!
-        ReactDOM.render(<div><GuGuDan /><GuGuDan /><GuGuDan /></div>, document.querySelector('#root')); // 원하는 개수만큼 늘리면 됨~!
+        ReactDOM.render(<GuGuDan />, document.querySelector('#root')); // 원하는 개수만큼 늘리면 됨~!
     </script>
     <!-- 상태는 바뀌는 부분이다. 바뀔수 있는 부분 ) -->
 </body>
