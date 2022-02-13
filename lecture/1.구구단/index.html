@@ -1,0 +1,82 @@
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>구구단</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+</head>
+
+<body>
+    <div id="root"></div> <!-- 결과 : <div id="root"><button>Like></button> </div>-->
+    <script type="text/babel">
+        class GuGuDan extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    // 바뀌는 것들을 속성으로 추가해주기
+                    first: Math.ceil(Math.random() * 9),
+                    second: Math.ceil(Math.random() * 9),
+                    value: '',
+                    result: '',
+                };
+            }
+
+            onSubmit = (e) => { // form 을 submit했을때 ~~
+                e.preventDefault();
+                // 입력한값과 실제 값이 같으면 ?! 정답 => 정답일때 화면이 어떻게 바뀔지
+                if (parseInt(this.state.value) === this.state.first * this.state.second) {
+                    this.setState({ 
+                        result: '정답',
+                        first: Math.ceil(Math.random() * 9),
+                        second: Math.ceil(Math.random() * 9),
+                        value: '',
+                    });
+                } else {
+                    this.setState({ // 한번에 바꿔줄수 있음
+                        result: '땡',
+                        vlaue: '',
+                    });
+                }
+            };
+            // 아래는 훅스 코드임
+            //     setResult('정답');
+            //     setFirst(Math.ceil(Math.random()*9));
+            //     setSecond(Math.ceil(Math.random() * 9));
+            //     setValue('');
+            //     inputEl.current.forcs();
+            // }else{
+            //     setResult('땡');
+            //     setValeu('');
+            //     inputEl.current.focus();
+            // }
+
+            onChange = (e) => this.setState({ value: e.target.value });
+
+            render() {
+                return ( // 소괄호는 취향차이(?)
+                    // state 바꿀때 어떻게 했는지?
+                    // input.onchange = (e) => { console.log(e.target.value)} // 얘를 이용하면 현재 뭘 입력하고 있는지 확인할 수 있음
+                    // state는 setState처럼 직접 수동으로 바뀔얘들만 만들어줘라! 
+                    <div>
+                        <div>{this.state.first} 곱하기 {this.state.second}는?</div>
+                        <form onSubmit={this.onSubmit}>
+                            <input type="number" value={this.state.value} onChange = {this.onChange} />
+                            <button>입력</button>
+                        </form>
+                        <div>{this.state.result}</div>
+                    </div>
+                );
+            }
+        }
+    </script>
+    <script type="text/babel"> // 위에 #root에 그린다!
+        // JSX 즉, xml 이기때문에 / 닫는 태그 잘써줘야함 문법에 엄격함!!
+        ReactDOM.render(<div><GuGuDan /><GuGuDan /><GuGuDan /></div>, document.querySelector('#root')); // 원하는 개수만큼 늘리면 됨~!
+    </script>
+    <!-- 상태는 바뀌는 부분이다. 바뀔수 있는 부분 ) -->
+</body>
+
+</html>
