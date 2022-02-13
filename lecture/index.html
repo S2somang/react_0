@@ -25,7 +25,7 @@
             // render(){return e(1,2,3 )} 
             // 1. 태그 2. html속성 3.내용
             render() {
-                return <button type="submit" onClick={() => { this.setState({ liked: true }) }}>{this.stat.liked === true ? 'Liked' : 'Like'}</button>;
+                return <button type="submit" onClick={() => { this.setState({ liked: true }) }}>{this.state.liked === true ? 'Liked' : 'Like'}</button>;
                 // JSX : 자바스크립트 + xml
                 // 위와 같이 편하게 사용할 수 있는데, 자바스크립트에서 html 태그를 사용하게 하지 않음. 이것이 바로 우리가 리액트를 포기하게 만드는 이유중하나임
                 // 그래서 나온것이 바벨. 최신문법과 실험적인 문법을 자바스크립트에서 사용할 수 있게 해줌. 바벨도 스크립트가 있어서 써줘야함! 
