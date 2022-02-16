@@ -71,11 +71,14 @@
                     // state는 setState처럼 직접 수동으로 바뀔얘들만 만들어줘라! 
                     // <input ref={(c)=> {this.input = c;}} ... 이렇게 사용하면 나중에 복잡한 함수일경우 랜더가 계속 실행이 됨.
                     // 그래서 위에 함수로 ㅂ따로 빼서 사용해주면 좋다.
+                    // class는 못씀 그래서 classname을 사용해야함 
+                    // for도 labelFor로 사용해야함^^
                     <div>
                         <div>{this.state.first} 곱하기 {this.state.second}는?</div>
                         <form onSubmit={this.onSubmit}>
                             <input ref={(c)=> this.onRefInput} type="number" value={this.state.value} onChange = {this.onChange} />
-                            <button>입력</button>
+                            <button id="button" className ="btn" >입력</button>
+
                         </form>
                         <div>{this.state.result}</div>
                     </div>
