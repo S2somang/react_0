@@ -4,9 +4,10 @@ const {Component} = React;
 class WordRelay extends Component{
     state ={
         // 컴포넌트 안써도 됨!
+        text : 'Hello, webpack'
     };
     render(){
-
+        return <h1>{this.state.text}</h1>
     }
 }
 
